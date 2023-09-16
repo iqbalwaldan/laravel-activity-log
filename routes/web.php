@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('posts/{post}/log', [App\Http\Controllers\PostController::class, 'log'])->name('posts.log');
+    Route::resource('posts', App\Http\Controllers\PostController::class);
+});
